@@ -1,0 +1,42 @@
+; **** DarkBASIC Professional Project ****
+; Created by CodeSurge IDE
+version=DBP1.00
+project name=ParticleMaker
+
+; ****Source file information****
+main=ParticleMaker.dba
+final source=_Temp.dbsource
+
+;***Executable filename***
+executable=ParticleMaker.exe
+build type=exe
+
+compression=NO
+encryption=NO
+card options window=NO
+
+; Debugger
+CLI=NO
+
+; *****Display Settings*****
+app title=DarkBASIC Pro Project
+graphics mode=fulldesktop
+fullscreen resolution=640x480x16
+window resolution=640x480
+
+
+;*****Media files, icons, cursors*****
+media root path=C:\Program Files\The Game Creators\Dark Basic Professional\Projects\ParticleMaker\
+cursorarrow=MEDIA\DOT.BMP
+
+;****Version Information****
+VerComments=
+VerCompany=
+VerFileDesc=
+VerFileNumber=
+VerInternal=
+VerCopyright=
+VerTrademark=
+VerFilename=
+VerProduct=
+VerProductNumber=v1.0

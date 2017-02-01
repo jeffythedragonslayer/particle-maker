@@ -1,0 +1,93 @@
+REM Project: ParticleMaker
+REM Created: 12/20/2007 7:36:07 PM
+REM
+REM ***** Main Source File *****
+REM
+
+local bitmap as boolean
+local extension as string
+
+local spixels as string
+local sred as string
+local sgreen as string
+local sblue as string
+
+local pixels as integer
+local red as byte
+local green as byte
+local blue as byte
+local alpha as float
+
+local x as dword
+local y as dword
+local pos as dword
+
+print "Particle Maker"
+print "by Code Dragon"
+print
+input "How many pixels wide and tall? ", spixels
+input "How much red? (0 - 255) ", sred
+input "How much green? (0 - 255) ", sgreen
+input "How much blue? (0 - 255) ", sblue
+print
+print "Working..."
+wait 1
+
+if mouseclick()
+  bitmap = 1
+  extension = "bmp"
+else
+  extension = "png"
+endif
+
+pixels = val(spixels)
+if pixels < 1 then pixels = 1
+red = val(sred)
+green = val(sgreen)
+blue = val(sblue)
+
+make memblock 1, 15 + (4 * pixels^2)
+write memblock dword 1, 0, pixels
+write memblock dword 1, 4, pixels
+write memblock dword 1, 8, 32
+
+pos = 12
+
+for y = 1 to pixels
+  for x = 1 to pixels
+    write memblock dword 1, pos, blue
+    write memblock dword 1, pos+1, green
+    write memblock dword 1, pos+2, red
+    
+    alpha = sqrt((x*1.0 - pixels/2.0)^2 + (y*1.0 - pixels/2.0)^2)
+    alpha = alpha / pixels*1.0
+    alpha = alpha * 2
+    alpha = 255 - int(alpha * 255)
+    if alpha > 255 then alpha = 255
+    if alpha < 0 then alpha = 0
+    
+    if bitmap
+      write memblock dword 1, pos, blue * (alpha/255.0)
+      write memblock dword 1, pos+1, green * (alpha/255.0)
+      write memblock dword 1, pos+2, red * (alpha/255.0)
+    else
+      write memblock dword 1, pos+3, alpha
+    endif
+    
+    inc pos, 4
+  next x
+next y
+
+make image from memblock 1, 1
+if file exist("ParticleImg." + extension) then delete file "ParticleImg." + extension
+save image "ParticleImg." + extension, 1
+
+print "Done"
+print
+print "Launching the folder the particle image is saved in so you can grab it."
+print "It is called ParticleImg." + extension
+print
+print "PLEASE ALLOW THROUGH YOUR FIREWALL"
+print "Press any key to continue"
+wait key
+execute file get dir$(), "", ""
